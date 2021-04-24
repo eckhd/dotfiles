@@ -1,0 +1,9 @@
+#!/bin/sh
+
+echo "Setting up..."
+
+[ -d "$HOME/.local/bin" ] || mkdir -p "$HOME/.local/bin"
+ln -sf "$PWD/scripts" "$HOME/.local/bin/scripts"
+ln -sf "$PWD/vimrc" "$HOME/.vimrc"
+
+echo "Complete."
