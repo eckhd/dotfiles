@@ -3,7 +3,22 @@
 echo "Setting up..."
 
 [ -d "$HOME/.local/bin" ] || mkdir -p "$HOME/.local/bin"
-ln -sf "$PWD/scripts" "$HOME/.local/bin/scripts"
-ln -sf "$PWD/vimrc" "$HOME/.vimrc"
+chmod +x $PWD/scripts/*
+
+ln -s "$PWD/scripts" "$HOME/.local/bin/scripts"
+ln -s "$PWD/vimrc" "$HOME/.vimrc"
+
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/loket/oh-my-zsh/feature/batch-mode/tools/install.sh)" -s --batch || {
+    echo "Could not install Oh My Zsh" >/dev/stderr
+    exit 1
+  }
+  mkdir -p "$HOME/.zsh"
+  echo -e '\nPATH=$PATH:$HOME/.local/bin/scripts:$HOME/.zsh/pure\nautoload -U promptinit; promptinit\nprompt pure' >> "$HOME/.zshrc"
+fi
+
+
+source ~/.zshrc
 
 echo "Complete."
